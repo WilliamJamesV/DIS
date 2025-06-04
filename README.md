@@ -1,4 +1,4 @@
-%Movie Guessr
+#Movie Guessr
 
 This is an unfinished version of a movie guessor game. 
 The database is the top 1000 movies from imdb, which can be found in the .csv.
