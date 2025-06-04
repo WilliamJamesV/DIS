@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Guess the Movie ({{ idx + 1 }}/10)</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-…"
+    crossorigin="anonymous"
+  >
+  <style>
+    body { padding: 2rem; background-color: #f8f9fa; }
+    .container { max-width: 700px; margin: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="mb-4">Movie {{ idx + 1 }} of 10</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <ul class="list-group list-group-flush mb-3">
+      <li class="list-group-item"><strong>Released Year:</strong> {{ released_year }}</li>
+      <li class="list-group-item"><strong>Genre:</strong> {{ genre }}</li>
+      <li class="list-group-item"><strong>IMDB Rating:</strong> {{ imdb_rating }}</li>
+      <li class="list-group-item"><strong>Director:</strong> {{ director }}</li>
+      <li class="list-group-item"><strong>Stars:</strong> {{ star1 }}, {{ star2 }}</li>
+      <li class="list-group-item"><strong>Votes:</strong> {{ no_of_votes }}</li>
+      <li class="list-group-item"><strong>Gross:</strong> {{ gross }}</li>
+    </ul>
+
+    <p><strong>Overview:</strong> {{ overview }}</p>
+
+    <form method="POST" action="{{ url_for('play_game', game_id=game_id, idx=idx) }}">
+      <div class="mb-3">
+        <label for="guess" class="form-label">Your Guess (Movie Title):</label>
+        <input
+          type="text"
+          class="form-control"
+          id="guess"
+          name="guess"
+          placeholder="Type the full movie title..."
+        >
+      </div>
+      <button type="submit" name="submit_guess" class="btn btn-success">Submit Guess</button>
+      <button type="submit" name="skip" class="btn btn-secondary">Skip</button>
+    </form>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-…"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>
