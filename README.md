@@ -1,6 +1,6 @@
 #Movie Guessr
 
-This is an unfinished version of a movie guessor game. 
+This is an unfinished version of a movie guesser game. 
 The database is the top 1000 movies from imdb, which can be found in the .csv.
 
 To run the program, change the values in app.py DB_SETTINGS to match your postgres database. 
