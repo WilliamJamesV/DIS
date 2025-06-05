@@ -1,4 +1,5 @@
 import os
+import re
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import psycopg
 import csv
@@ -8,11 +9,11 @@ app = Flask(__name__)
 app.secret_key = "api_key"  # doesnt matter if u change this
 
 DB_SETTINGS = {
-    "dbname":   "imdb", # INSERT DBNAME
+    "dbname":   "postgres", # INSERT DBNAME
     "user":     "postgres", # INSERT USER
-    "password": "monkey", # INSERT PASSWORD
+    "password": "1234567890g", # INSERT PASSWORD
     "host":     "localhost", # propably no need to change this
-    "port":     5433 # INSERT PORT (5432 is default i think)
+    "port":     5432 # INSERT PORT (5432 is default i think)
 }
 
 def init_db():
@@ -125,7 +126,9 @@ def add_user():
         if not username:
             flash("Username cannot be blank.", "danger")
             return redirect(url_for("add_user"))
-
+        if not re.fullmatch(r"\w{3,12}", username):
+            flash("Username must be inbetween 3-12 characters, with no special characters.", "danger")
+            return redirect(url_for("add_user"))
         try:
             conn = psycopg.connect(**DB_SETTINGS)
             conn.autocommit = False
@@ -239,8 +242,9 @@ def play_game(game_id, idx):
         if "skip" in request.form:
             # Move to next movie without changing score
             return redirect(url_for("play_game", game_id=game_id, idx=idx + 1))
-
-        if user_guess.lower() == real_title.lower():
+        pattern = re.sub(r'\W+', '', real_title.strip().lower())
+        guess_clean = re.sub(r'\W+', '', user_guess.strip().lower())
+        if pattern == guess_clean:
             session[score_key] = session.get(score_key, 0) + 1
             flash("Correct!", "success")
         else:
