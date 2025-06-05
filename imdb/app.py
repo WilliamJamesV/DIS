@@ -9,9 +9,9 @@ app = Flask(__name__)
 app.secret_key = "api_key"  # doesnt matter if u change this
 
 DB_SETTINGS = {
-    "dbname":   "postgres", # INSERT DBNAME
+    "dbname":   "INSERT_YOUR_DB_NAME", # INSERT DBNAME
     "user":     "postgres", # INSERT USER
-    "password": "1234567890g", # INSERT PASSWORD
+    "password": "INSERT_YOUR_PASSWORD", # INSERT PASSWORD
     "host":     "localhost", # propably no need to change this
     "port":     5432 # INSERT PORT (5432 is default i think)
 }
